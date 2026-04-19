@@ -8,25 +8,7 @@ const path = require('path');
 const app = express();
 
 app.use(helmet());
-
-// ── CORS ─────────────────────────────────────────────────────
-const allowedOrigins = [
-  'https://tuition-frontend.pages.dev',
-  'https://d106086e.tuition-frontend.pages.dev',
-  process.env.FRONTEND_URL,
-].filter(Boolean);
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
-    callback(new Error(`CORS blocked: ${origin}`));
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-}));
-
-app.options('*', cors());
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
